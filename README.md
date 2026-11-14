@@ -28,9 +28,37 @@ The physics weight `beta` anneals linearly from `beta_start` to `beta_end`, and 
 | File | Description |
 | --- | --- |
 | `Model code.py` | Main program: data preprocessing, LSTM + PINN modeling, training, evaluation and creep curve simulation |
+| `Collect data.csv` | Training data: 2,339 rows over 6 specimens |
+| `Test data.csv` | Test data: 1,560 rows over 4 specimens |
 | `requirements.txt` | Runtime dependencies |
 
 `Model code.py` is organized into 7 numbered parts: core configuration and parameters, data loading and preprocessing, tensor conversion and device setup, model definition (LSTM + PINN), evaluation metrics, model initialization and training, and model evaluation.
+
+## Datasets
+
+Both CSV files open directly in the browser, where GitHub renders them as a table.
+
+`Collect data.csv`: 6 specimens (labels such as `L12.3-H2-S2.5`), 2,339 rows.
+
+| Column | Content |
+| --- | --- |
+| (unnamed) | Specimen label, written once at the first row of each group |
+| `time` | Time step, 5 to 592,600 |
+| `adhesive_length` | Bonded length of the specimen |
+| `stress` | Loading stress |
+| `creep` | Measured creep value, 0.1 to 23.6 |
+
+`Test data.csv`: 4 specimens (labels such as `L13.5-H1.5-S1.5`), 1,560 rows.
+
+| Column | Content |
+| --- | --- |
+| (unnamed) | Specimen label, written once at the first row of each group |
+| `time` | Time step, 5 to 592,600 |
+| `adhesive_thickness` | Adhesive thickness of the specimen |
+| `stress` | Loading stress |
+| `creep` | Measured creep value, 0 to 47.7 |
+
+The specimen label encodes bonded length (L), adhesive thickness (H) and a stress level (S), for example `L12.3-H2-S2.5`. The `stress` column holds the actual loading stress, which is not the same number as the S value in the label. The script reads only the `time` and `creep` columns; the remaining columns are kept for reference.
 
 ## Usage
 
